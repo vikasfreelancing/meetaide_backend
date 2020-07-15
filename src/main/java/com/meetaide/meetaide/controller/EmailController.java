@@ -1,5 +1,7 @@
 package com.meetaide.meetaide.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.meetaide.meetaide.service.MailchimpService;
 import com.meetaide.meetaide.service.SendEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmailController {
 
     @Autowired
-    SendEmailService sendEmailService;
+    MailchimpService sendEmailService;
     @GetMapping
-    public String sendEmail(@RequestParam("to") String email){
+    public String sendEmail(@RequestParam("to") String email) throws JsonProcessingException {
         System.out.println(email);
-        sendEmailService.sendEmail(email);
+        sendEmailService.sendTestEmail(email);
         return "SUCESS";
     }
 }

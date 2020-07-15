@@ -8,6 +8,7 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,15 @@ public class MailchimpService {
                 HttpEntity<Map<String, Object>> post = new HttpEntity<>(postBody, headers);
                 String sendEmail = MailchimpConstants.GET_CAMP + "/" + compaignId + "/actions/test";
                 System.out.println(sendEmail);
-                ResponseEntity<String> res = restTemplate.exchange(sendEmail, HttpMethod.POST, post, String.class);
+                ResponseEntity<String> res=null;
+                try{
+                    res = restTemplate.exchange(sendEmail, HttpMethod.POST, post, String.class);
+                }
+                catch (Exception ee){
+                    throw new IllegalArgumentException("Maximum number of mails send for this compaign");
+                }
+                if(res.getStatusCode()== HttpStatus.BAD_REQUEST)
+                    throw new IllegalArgumentException("Maximum number of mails send for this compaign");
                 System.out.println(res);
                 return;
             }

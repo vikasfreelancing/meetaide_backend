@@ -16,9 +16,9 @@ public class EmailController {
     @Autowired
     MailchimpService sendEmailService;
     @GetMapping
-    public String sendEmail(@RequestParam("to") String email) throws JsonProcessingException {
+    public String sendEmail(@RequestParam("to") String email,@RequestParam("key") String apiKey) throws JsonProcessingException {
         System.out.println(email);
-        sendEmailService.sendTestEmail(email);
+        sendEmailService.sendTestEmail(email,apiKey);
         return "SUCESS";
     }
 }

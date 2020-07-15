@@ -20,13 +20,12 @@ import java.util.Map;
 
 @Service
 public class MailchimpService {
-    public void sendTestEmail(String email) throws JsonProcessingException {
+    public void sendTestEmail(String email,String apiKey) throws JsonProcessingException {
         ObjectMapper obj = new ObjectMapper();
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        //1519e7e94f566dd55f584afc519812ba-a83a87a9-dedf987c
-        headers.setBasicAuth("anystring", MailchimpConstants.API_KEY);
+        headers.setBasicAuth("anystring", apiKey);
         HttpEntity requestEntity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(MailchimpConstants.GET_CAMP, HttpMethod.GET, requestEntity, String.class);
         System.out.println(response);
